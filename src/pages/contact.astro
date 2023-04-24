@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+---
+
+<BaseLayout
+	title="My Work | Toggle"
+	description="Learn about Toggle's most recent projects"
+>
+<div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+        <Hero
+            title="Contact me"
+            tagline="Send me a message and let's see if we can work together!"
+            align="start"
+        />
+        <form action="/" netlify>
+            <ul>
+              
+              <li>
+                <p class="float">
+                  <label for="first_name">full name</label>
+                  <input type="text" name="first_name" placeholder="John" />
+                </p>
+                <p class="float">
+                  <label for="last_name">last name</label>
+                  <input type="text" name="last_name" placeholder="Smith" />      
+                </p>
+              </li>
+              
+              <li>
+                <p>
+                  <label for="email">email <span class="req">*</span></label>
+                  <input type="email" name="email" placeholder="john.smith@gmail.com" />
+                </p>
+              </li>        
+              <li><div class="divider"></div></li>
+              <li>
+                <label for="comments">comments</label>
+                <textarea cols="46" rows="3" name="comments"></textarea>
+              </li>
+              
+              <li>
+                <input class="btn btn-submit" type="submit" value="Submit" />
+                <small>or press <strong>enter</strong></small>
+              </li>
+              
+            </ul>
+          </form>
+    </main>
+</div>
+</BaseLayout>
+
+<style>
+.float {
+    float: left;
+    margin-right: 10px;
+}
+
+.btn {
+  font-size: 1.0625em;
+  display: inline-block;
+  padding: 0.74em 1.5em;
+  margin: 1.5em 0 0;
+  color: #fff;
+  border-width: 0 0 0 0;
+  border-bottom: 5px solid;
+  text-transform: uppercase;
+  background-color: #b3b3b3;
+  border-bottom-color: #8c8c8c;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+.btn:hover {
+  background-color: #bfbfbf;
+}
+.btn.btn-submit {
+  background-color: #A34FDE;
+  border-bottom-color: #FF386B;
+}
+.btn.btn-submit:hover {
+  background-color: #3DD6F5;
+}
+
+form {
+  max-width: 100%;
+  display: block;
+}
+form ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+form ul li {
+  margin: 0 0 0.25em 0;
+  clear: both;
+  display: inline-block;
+  width: 100%;
+}
+form ul li:last-child {
+  margin: 0;
+}
+form ul li p {
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+form ul li p.right {
+  float: right;
+}
+form ul li .divider {
+  margin: 0.5em 0 0.5em 0;
+  border: 0;
+  height: 1px;
+  width: 100%;
+  display: block;
+  background-color: #3DD6F5;
+  background-image: linear-gradient(to right, #FF386B, #3DD6F5);
+}
+form ul li .req {
+  color: #ee9cb4;
+}
+form label {
+  display: block;
+  margin: 0 0 0.5em 0;
+  color: #4f6fad;
+  font-size: 1em;
+}
+form input {
+  margin: 0 0 0.5em 0;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  color: #555;
+  font-size: 1em;
+}
+form textarea {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  width: 100%;
+  color: #555;
+}
+form small {
+  color: #4f6fad;
+  margin: 0 0 0 0.5em;
+}
+</style>

@@ -25,6 +25,15 @@ const projects = (await getCollection('work'))
 // https://docs.astro.build/core-concepts/astro-components/
 ---
 
+<script>
+const open = document.getElementsByClassName("toast")[0];
+const close = document.getElementsByClassName("close")[0];
+
+close.addEventListener("click", function() {
+	open.classList.remove("on");
+});
+</script>
+
 <BaseLayout>
 	<div class="stack gap-20 lg:gap-48">
 		<div class="wrapper stack gap-8 lg:gap-20">
@@ -78,7 +87,11 @@ const projects = (await getCollection('work'))
 					</CallToAction>
 				</div>
 			</section>
-
+			<!--- this toast is hidden until a new item is added to work -->
+			<div class="toast jam" aria-hidden="true">
+				<span class="close" aria-role="button" tabindex="0">&times;</span>
+				<span id="toast-content">Toast message.</span>
+			</div>
 		</main>
 
 		<ContactCTA />
@@ -226,4 +239,36 @@ const projects = (await getCollection('work'))
 			height: 9.5rem;
 		}
 	}
+
+	/* toast */
+	.toast {
+		color: #000;
+		line-height: 1.5;
+		margin-bottom: 1em;
+		padding: 1.25em;
+		position: absolute;
+		right: -365px;
+		top: 1em;
+		transition: 0.15s ease-in-out;
+		width: 325px;
+	}
+
+	.toast.on {
+		transform: translateX(-365px);
+	}
+
+	.close {
+		cursor: pointer;
+		float: right;
+		font-size: 1.25rem;
+		line-height: 1;
+		margin-left: 1em;
+		opacity: .8;
+	}
+
+	.jam {
+		background-color: #99004d;
+		color: #fff;
+	}
+
 </style>

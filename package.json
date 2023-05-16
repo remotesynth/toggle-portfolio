@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/rss": "^2.4.1",
-    "astro": "^2.3.0"
+    "astro": "^2.3.0",
+    "launchdarkly-js-client-sdk": "^3.1.3"
   }
 }

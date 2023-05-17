@@ -16,25 +16,58 @@ import PortfolioPreview from '../components/PortfolioPreview.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
 
+import ld from 'launchdarkly-node-server-sdk';
+
 // Content Fetching: List four most recent work projects
 const projects = (await getCollection('work'))
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 	.slice(0, 4);
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/core-concepts/astro-components/
+const ldClient = ld.init(import.meta.env.LD_SDK_KEY);
+await ldClient.waitForInitialization();
+const context = {
+  kind: 'user',
+  key: 'anonymous'
+};
+const showWork = await ldClient.variation('show-work', context, false);
 ---
 
 <script>
 const open = document.getElementsByClassName("toast")[0];
 const close = document.getElementsByClassName("close")[0];
+import * as LDClient from 'launchdarkly-js-client-sdk';
+const context = {
+  kind: 'user',
+  key: 'anonymous'
+};
+const client = LDClient.initialize(import.meta.env.PUBLIC_LD_CLIENT_ID, context);
+await client.waitForInitialization();
+
+const displayToast = client.variation('display-toast', false);
+console.log(displayToast)
+if (displayToast) {
+	showToast();
+}
+client.on('change:display-toast', (displayToast) => {
+	console.log((displayToast));
+	if (displayToast) {
+		showToast();
+	}
+});
+client.on('change:show-work', () => {
+	location.reload();
+});
 
 close.addEventListener("click", function() {
 	open.classList.remove("on");
 });
+
+function showToast() {
+	open.classList.add("on");
+}
 </script>
 
-<BaseLayout>
+<BaseLayout showWork={showWork}>
 	<div class="stack gap-20 lg:gap-48">
 		<div class="wrapper stack gap-8 lg:gap-20">
 			<header class="hero">
@@ -60,7 +93,7 @@ close.addEventListener("click", function() {
 
 			<Skills />
 		</div>
-
+		{ showWork && (
 		<main class="wrapper stack gap-20 lg:gap-48">
 			<section class="section with-background with-cta">
 				<header class="section-header stack gap-2 lg:gap-4">
@@ -90,9 +123,10 @@ close.addEventListener("click", function() {
 			<!--- this toast is hidden until a new item is added to work -->
 			<div class="toast jam" aria-hidden="true">
 				<span class="close" aria-role="button" tabindex="0">&times;</span>
-				<span id="toast-content">Toast message.</span>
+				I just posted a new item to my work portfolio! <a href="/work">Check it out!</a>
 			</div>
 		</main>
+		)}
 
 		<ContactCTA />
 	</div>
@@ -251,6 +285,7 @@ close.addEventListener("click", function() {
 		top: 1em;
 		transition: 0.15s ease-in-out;
 		width: 325px;
+		z-index: 9999;
 	}
 
 	.toast.on {

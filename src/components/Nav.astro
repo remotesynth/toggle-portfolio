@@ -2,12 +2,22 @@
 import Icon, { Props as IconProps } from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
+interface Props {
+	showWork?: boolean | false;
+}
+
+const { showWork } = Astro.props;
+
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
 	{ label: 'Home', href: '/' },
 	{ label: 'Work', href: '/work/' },
 	{ label: 'About', href: '/about/' },
 ];
+// hide work behind a flag
+if (!showWork) {
+	textLinks.splice(1, 1);
+}
 
 /** Icon links to social media — edit these with links to your profiles! */
 const iconLinks: { label: string; href: string; icon: IconProps['icon'] }[] = [

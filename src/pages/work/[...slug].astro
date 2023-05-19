@@ -1,5 +1,5 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content';
+import { getEntryBySlug } from "astro:content";
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -8,22 +8,27 @@ import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
 import Pill from '../../components/Pill.astro';
 
-interface Props {
-	entry: CollectionEntry<'work'>;
+import ld from 'launchdarkly-node-server-sdk';
+
+const ldClient = ld.init(import.meta.env.LD_SDK_KEY);
+await ldClient.waitForInitialization();
+const context = {
+  kind: 'user',
+  key: 'anonymous'
+};
+const showWork = await ldClient.variation('show-work', context, false);
+if (!showWork) {
+  return Astro.redirect("/404");
 }
 
-// This is a dynamic route that generates a page for every Markdown file in src/content/
-// Read more about dynamic routes and this `getStaticPaths` function in the Astro docs:
-// https://docs.astro.build/en/core-concepts/routing/#dynamic-routes
-export async function getStaticPaths() {
-	const work = await getCollection('work');
-	return work.map((entry) => ({
-		params: { slug: entry.slug },
-		props: { entry },
-	}));
+const { slug } = Astro.params;
+if (slug === undefined) {
+  throw new Error("Slug is required");
 }
-
-const { entry } = Astro.props;
+const entry = await getEntryBySlug('work', slug);
+if (entry === undefined) {
+  return Astro.redirect("/404");
+}
 const { Content } = await entry.render();
 ---
 

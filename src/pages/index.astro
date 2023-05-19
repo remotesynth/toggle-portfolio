@@ -32,42 +32,7 @@ const context = {
 const showWork = await ldClient.variation('show-work', context, false);
 ---
 
-<script>
-const open = document.getElementsByClassName("toast")[0];
-const close = document.getElementsByClassName("close")[0];
-import * as LDClient from 'launchdarkly-js-client-sdk';
-const context = {
-  kind: 'user',
-  key: 'anonymous'
-};
-const client = LDClient.initialize(import.meta.env.PUBLIC_LD_CLIENT_ID, context);
-await client.waitForInitialization();
-
-const displayToast = client.variation('display-toast', false);
-console.log(displayToast)
-if (displayToast) {
-	showToast();
-}
-client.on('change:display-toast', (displayToast) => {
-	console.log((displayToast));
-	if (displayToast) {
-		showToast();
-	}
-});
-client.on('change:show-work', () => {
-	location.reload();
-});
-
-close.addEventListener("click", function() {
-	open.classList.remove("on");
-});
-
-function showToast() {
-	open.classList.add("on");
-}
-</script>
-
-<BaseLayout showWork={showWork}>
+<BaseLayout>
 	<div class="stack gap-20 lg:gap-48">
 		<div class="wrapper stack gap-8 lg:gap-20">
 			<header class="hero">

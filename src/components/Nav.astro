@@ -1,17 +1,20 @@
 ---
 import Icon, { Props as IconProps } from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import ld from 'launchdarkly-node-server-sdk';
 
-interface Props {
-	showWork?: boolean | false;
-}
-
-const { showWork } = Astro.props;
+const ldClient = ld.init(import.meta.env.LD_SDK_KEY);
+await ldClient.waitForInitialization();
+const context = {
+  kind: 'user',
+  key: 'anonymous'
+};
+const showWork = await ldClient.variation('show-work', context, false);
 
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
 	{ label: 'Home', href: '/' },
-	{ label: 'Work', href: '/work/' },
+	{ label: 'Work', href: '/mywork/' },
 	{ label: 'About', href: '/about/' },
 ];
 // hide work behind a flag

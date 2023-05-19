@@ -8,6 +8,19 @@ import PortfolioPreview from '../components/PortfolioPreview.astro';
 import Hero from '../components/Hero.astro';
 import Grid from '../components/Grid.astro';
 
+import ld from 'launchdarkly-node-server-sdk';
+
+const ldClient = ld.init(import.meta.env.LD_SDK_KEY);
+await ldClient.waitForInitialization();
+const context = {
+  kind: 'user',
+  key: 'anonymous'
+};
+const showWork = await ldClient.variation('show-work', context, false);
+if (!showWork) {
+  return Astro.redirect("/404");
+}
+
 const projects = (await getCollection('work')).sort(
 	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );

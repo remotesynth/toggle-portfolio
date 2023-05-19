@@ -85,11 +85,6 @@ const showWork = await ldClient.variation('show-work', context, false);
 					</CallToAction>
 				</div>
 			</section>
-			<!--- this toast is hidden until a new item is added to work -->
-			<div class="toast jam" aria-hidden="true">
-				<span class="close" aria-role="button" tabindex="0">&times;</span>
-				I just posted a new item to my work portfolio! <a href="/work">Check it out!</a>
-			</div>
 		</main>
 		)}
 
@@ -238,37 +233,4 @@ const showWork = await ldClient.variation('show-work', context, false);
 			height: 9.5rem;
 		}
 	}
-
-	/* toast */
-	.toast {
-		color: #000;
-		line-height: 1.5;
-		margin-bottom: 1em;
-		padding: 1.25em;
-		position: absolute;
-		right: -365px;
-		top: 1em;
-		transition: 0.15s ease-in-out;
-		width: 325px;
-		z-index: 9999;
-	}
-
-	.toast.on {
-		transform: translateX(-365px);
-	}
-
-	.close {
-		cursor: pointer;
-		float: right;
-		font-size: 1.25rem;
-		line-height: 1;
-		margin-left: 1em;
-		opacity: .8;
-	}
-
-	.jam {
-		background-color: #99004d;
-		color: #fff;
-	}
-
 </style>

@@ -31,7 +31,7 @@ const handleSubmit = (event) => {
       const client = LDClient.initialize(import.meta.env.PUBLIC_LD_CLIENT_ID, context);
       await client.waitForInitialization();
       document.cookie = `context=${JSON.stringify(context)};  Secure`;
-      location.replace("/#contact")
+      //location.replace("/#contact")
     })
     .catch((error) => alert(error));
 };

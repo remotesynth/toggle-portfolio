@@ -25,11 +25,19 @@ const projects = (await getCollection('work'))
 
 const ldClient = ld.init(import.meta.env.LD_SDK_KEY);
 await ldClient.waitForInitialization();
-const context = {
-  kind: 'user',
-  key: 'anonymous'
-};
+const contextCookie = Astro.cookies.get('context').value;
+
+let context;
+if (contextCookie) {
+	context = JSON.parse(contextCookie);
+} else {
+	context = {
+	kind: 'user',
+	key: 'anonymous'
+	};
+}
 const showWork = await ldClient.variation('show-work', context, false);
+const showContact = await ldClient.variation('show-contact', context, true);
 ---
 
 <BaseLayout>
@@ -77,7 +85,7 @@ const showWork = await ldClient.variation('show-work', context, false);
 						}
 					</Grid>
 				</div>
-
+				
 				<div class="cta">
 					<CallToAction href="/work/">
 						View All
@@ -87,8 +95,7 @@ const showWork = await ldClient.variation('show-work', context, false);
 			</section>
 		</main>
 		)}
-
-		<ContactCTA />
+		<ContactCTA showContact={showContact} />
 	</div>
 </BaseLayout>
 

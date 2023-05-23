@@ -1,14 +1,34 @@
 ---
 import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
+
+const {showContact} = Astro.props;
 ---
 
-<aside>
-	<h2>Interested in working together?</h2>
+<script>
+function clearCookie() {
+	document.cookie = 'context=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+	location.reload();
+}
+const linkClearCookie = document.getElementById('linkClearCookie')
+
+if (linkClearCookie)
+	linkClearCookie.addEventListener('click', clearCookie);
+</script>
+
+<aside id="contact">
+	{showContact ? (
+	<>
+	<h2 class="width-15ch">Interested in working together?</h2>
 	<CallToAction href="/contact">
 		Send Me a Message
 		<Icon icon="paper-plane-tilt" size="1.2em" />
 	</CallToAction>
+	</>
+	): (
+		<h2>Thanks for reaching out! I'll be in contact soon.</h2>
+		<p>(<a href="#" id="linkClearCookie">clear my cookie</a>)</p>
+	)}
 </aside>
 
 <style>
@@ -27,6 +47,9 @@ import Icon from './Icon.astro';
 	h2 {
 		font-size: var(--text-xl);
 		text-align: center;
+	}
+
+	.width-15ch {
 		max-width: 15ch;
 	}
 

@@ -5,6 +5,42 @@ import Hero from '../components/Hero.astro';
 export const prerender = true;
 ---
 
+<script>
+import * as LDClient from 'launchdarkly-js-client-sdk';
+const handleSubmit = (event) => {
+  event.preventDefault();
+
+  const myForm = event.target;
+  const formData = new FormData(myForm);
+  
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(formData.toString()),
+  })
+    .then(async () => {
+      console.log("Form successfully submitted");
+
+      const context = {
+        key: formData.get("email"),
+        kind: "user",
+        email: formData.get("email"),
+        firstName: formData.get("first_name"),
+        lastName: formData.get("last_name"),
+      };
+      const client = LDClient.initialize(import.meta.env.PUBLIC_LD_CLIENT_ID, context);
+      await client.waitForInitialization();
+      document.cookie = `context=${JSON.stringify(context)};  Secure`;
+      location.replace("/#contact")
+    })
+    .catch((error) => alert(error));
+};
+
+document
+  .querySelector("form")
+  .addEventListener("submit", handleSubmit);
+</script>
+
 <BaseLayout
 	title="My Work | Toggle"
 	description="Learn about Toggle's most recent projects"

@@ -13,7 +13,7 @@ const handleSubmit = (event) => {
   const myForm = event.target;
   const formData = new FormData(myForm);
   
-  fetch("/contact/", {
+  fetch("/thankyou/", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams(formData.toString()),
@@ -42,8 +42,8 @@ document
 </script>
 
 <BaseLayout
-	title="My Work | Toggle"
-	description="Learn about Toggle's most recent projects"
+	title="Contact Me | Toggle"
+	description="Get in touch with Toggle."
 >
 <div class="stack gap-20">
     <main class="wrapper stack gap-8">
@@ -52,7 +52,7 @@ document
             tagline="Send me a message and let's see if we can work together!"
             align="start"
         />
-        <form action="/contact/" name="contact" method="POST" data-netlify="true">
+        <form action="/thankyou/" name="contact" method="POST" data-netlify="true">
             <ul>
               
               <li>

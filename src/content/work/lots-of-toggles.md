@@ -1,6 +1,6 @@
 ---
 title: Lotsa Toggles
-publishDate: 2023-01-02 00:00:00
+publishDate: 2023-01-04 00:00:00
 img: /assets/arthur-mazi-vFhsyAMbHkE-unsplash.jpg
 img_alt: Lots of toggle switches.
 description: |

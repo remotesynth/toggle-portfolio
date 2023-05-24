@@ -1,6 +1,6 @@
 ---
 title: Custom Hardware Toggles
-publishDate: 2023-03-02 00:00:00
+publishDate: 2023-03-22 00:00:00
 img: /assets/arthur-mazi-PIwz4C6wr9A-unsplash.jpg
 img_alt: A custom toggle
 description: |
